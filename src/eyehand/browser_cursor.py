@@ -90,7 +90,7 @@ PAGE = """<!doctype html>
   #tabs button[aria-selected="true"] { background: #245b75; border-color: #77ddff; }
   button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
   #drag-panel { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-  #drag-panel[hidden], #entry-panel[hidden] { display: none; }
+  #drag-panel[hidden] { display: none; }
   #playground { flex: 1; position: relative; overflow: hidden; border: 2px dashed #60758e;
                 border-radius: 20px; background: #111923cc; min-height: 110px; }
   .shape { position: absolute; width: 144px; height: 144px; padding: 0; border: 0;
@@ -116,17 +116,6 @@ PAGE = """<!doctype html>
   #viewer-tools button { pointer-events: auto; font: inherit; padding: 12px 20px; border-radius: 8px; cursor: pointer; }
   #viewer-status { margin: 8px 0; }
   #viewer-credit { position: absolute; bottom: 8px; right: 12px; font-size: 11px; color: #9bb0c3; pointer-events: none; }
-  #entry-panel { flex: 1; padding: 40px; background: #172535; border-radius: 20px; }
-
-  #name-form { max-width: 900px; margin: 8vh auto; }
-  #name-form label { display: block; font-size: 28px; font-weight: 600; }
-  #patient-name { box-sizing: border-box; width: 100%; font: 36px system-ui; padding: 24px;
-                  border: 3px solid #60758e; border-radius: 14px; color: #fff; background: #101c2b; }
-  #patient-name:focus { outline: 4px solid #77ddff; outline-offset: 4px; }
-  #patient-name[data-mode] { border-color: #42e58c; background: #123b32; }
-  #voice-status { font-size: 21px; min-height: 30px; color: #77ddff; }
-  #name-form button { font: inherit; padding: 14px 22px; border-radius: 10px; cursor: pointer; margin-right: 12px; }
-  #voice-preview { min-height: 24px; color: #9bb0c3; }
 </style>
 <div id="message"><span id="tracking-status">Waiting for both cameras…</span><br><small>Page clicks · C6/C8 not calibrated</small>
 <button id="dismiss" type="button" aria-label="Close status message" onclick="document.querySelector('#message').hidden = true">×</button></div>
@@ -148,7 +137,6 @@ PAGE = """<!doctype html>
 <main id="demo">
 <nav id="tabs" role="tablist" aria-label="Demos">
 <button id="drag-tab" role="tab" aria-selected="true" aria-controls="drag-panel">Move shapes</button>
-<button id="entry-tab" role="tab" aria-selected="false" aria-controls="entry-panel">Data entry</button>
 <button id="viewer-tab" role="tab" aria-selected="false" aria-controls="viewer-panel">3D Viewer</button>
 </nav>
 <section id="drag-panel" role="tabpanel" aria-labelledby="drag-tab">
@@ -158,17 +146,6 @@ PAGE = """<!doctype html>
 <button class="shape" id="shape-square" aria-label="Photo"><svg viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="8" fill="#f1f5ff"/><rect x="12" y="12" width="76" height="76" rx="4" fill="#9ccfff"/><circle cx="68" cy="32" r="10" fill="#ffe28a"/><path d="M12 77 L36 43 L57 67 L69 52 L88 77 V88 H12 Z" fill="#4e997c"/></svg></button>
 <button class="shape" id="shape-card" aria-label="Two of Spades"><svg viewBox="0 0 100 100"><rect class="card-face" x="19" y="2" width="62" height="96" rx="5" fill="#fffdf5" stroke="#c6cad1"/><g fill="#17202b" font-family="Georgia, serif"><text x="24" y="21" font-size="19">2</text><text x="24" y="36" font-size="18">♠</text><text x="50" y="43" text-anchor="middle" font-size="29">♠</text><text x="50" y="78" text-anchor="middle" font-size="29" transform="rotate(180 50 66)">♠</text></g></svg></button>
 <button class="shape" id="shape-folder" aria-label="junk files folder"><svg viewBox="0 0 100 100"><path d="M7 22 H40 L49 31 H93 V83 H7 Z" fill="#d89a31"/><path d="M7 37 Q7 33 12 33 H88 Q94 33 93 39 L88 83 H12 Z" fill="#ffd16c"/><text x="50" y="97" text-anchor="middle" fill="#e4edf7" font-family="system-ui" font-size="13">junk files</text></svg></button>
-</div></section>
-<section id="entry-panel" role="tabpanel" aria-labelledby="entry-tab" hidden>
-<div id="name-form">
-<label for="patient-name">Patient Name</label>
-<input id="patient-name" type="text" autocomplete="off" placeholder="Click here with the mouse or claw" aria-describedby="voice-instructions voice-status">
-<p id="voice-instructions">Say <strong>“Write this”</strong> or <strong>“Spell this”</strong>, then say the name.</p>
-<p id="voice-status" role="status">Select Patient Name to begin.</p>
-<p id="voice-preview" aria-live="polite"></p>
-<button id="enable-microphone" type="button">Enable microphone</button>
-<button id="clear-name" type="button">Clear name</button>
-<p><small>Spelling: letter names, space, hyphen, apostrophe, period, and digits. Three seconds of silence ends entry. Use fictional patient names.</small></p>
 </div></section>
 <section id="viewer-panel" role="tabpanel" aria-labelledby="viewer-tab" hidden>
 <canvas id="viewer-canvas" aria-label="Toroidal propeller. Drag to rotate; scroll to zoom. Arrow keys rotate; plus and minus zoom." tabindex="0"></canvas>
@@ -274,12 +251,11 @@ for (const [index, name] of shapeNames.entries()) {
   });
 }
 updateTargets();
-for (const name of ['drag', 'entry', 'viewer']) {
+for (const name of ['drag', 'viewer']) {
   document.querySelector(`#${name}-tab`).addEventListener('click', () => {
     endDrag();
     window.propellerViewer?.end();
-    if (name !== 'entry') window.nameEntry?.stop();
-    for (const other of ['drag', 'entry', 'viewer']) {
+    for (const other of ['drag', 'viewer']) {
       document.querySelector(`#${other}-tab`).setAttribute('aria-selected', String(other === name));
       document.querySelector(`#${other}-panel`).hidden = other !== name;
     }
@@ -511,7 +487,6 @@ requestAnimationFrame(draw);
 </script>
 <script type="importmap">{"imports":{"three":"/viewer/three.module.js"}}</script>
 <script type="module" src="/viewer/viewer.js"></script>
-<script type="module" src="/viewer/entry.js"></script>
 """.replace("<!--claw-->", CLAW_SVG).encode()
 
 

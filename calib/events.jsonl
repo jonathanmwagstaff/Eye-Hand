@@ -75,3 +75,4 @@
 {"time": "2026-10-28T14:40:25", "event": "c7_alarm", "detail": "face epipolar 13.7 px > 5.2 px"}
 {"time": "2026-10-28T14:40:30", "event": "c7_alarm", "detail": "room check: a camera turned 0.57\u00b0"}
 {"time": "2026-10-28T14:43:25", "event": "moved", "detail": "User moved Feeltek tripod to the users LEFT; video panels reordered F, L"}
+{"time": "2026-10-28T16:01:34", "event": "stereo_installed", "detail": "calib/raw/stereo/20261028-155641"}

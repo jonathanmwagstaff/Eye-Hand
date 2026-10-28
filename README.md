@@ -68,7 +68,7 @@ Neither mode smooths or interpolates movement. Each cursor updates immediately o
 position and holds its last valid position for up to three seconds during tracking loss,
 then hides. Missing/invalid updates do not extend that timeout; each hand expires independently.
 
-The cursor page has in-page **Move shapes**, **Data entry**, and **3D Viewer** demo tabs. Move shapes
+The cursor page has in-page **Move shapes** and **3D Viewer** demo tabs. Move shapes
 contains a circle, triangle, a photo icon with an Upload photos drop zone,
 a Two of Spades with an Ace of Spades target,
 and a junk files folder with a Recycle Bin target. Hold the mouse button or pinch
@@ -76,16 +76,6 @@ and hold with the primary claw to drag; release to drop. Shapes stay inside the 
 area. Tracking loss pauses a grabbed shape without releasing it; movement resumes with
 valid tracking. The dotted shape outlines only change color: they never snap, lock, move,
 or release shapes. Focused shapes also move with arrow keys.
-
-**Data entry** has a Patient Name field. Select it with the mouse or claw, then say
-**Write this** for dictation or **Spell this** for individual letters (including space,
-hyphen, apostrophe, period, and digits). **Type this** also starts dictation. An ascending
-two-note chime marks entry; three seconds of silence or **Done writing** ends entry with
-a descending chime. **Delete last character** corrects the last character, and **Clear
-name** resets the field. Text appears live; transcription only runs while the name field
-is selected. Microphone permission is requested on page load; browser settings control
-whether it is remembered. Use **Enable microphone** to retry or unlock browser audio.
-Browser speech recognition may use an online service; use fictional names for this demo.
 
 **3D Viewer** displays the supplied toroidal propeller by Akshay Venugopal. Hold and
 drag anywhere in the viewer with the mouse to rotate; scroll to zoom. With the primary

@@ -17,6 +17,9 @@ SCREEN_MM = (344.0, 194.0)
 
 def test_browser_page_is_utf8():
     assert "Eye-Hand browser cursor" in browser_cursor.PAGE.decode()
+    assert b'id="entry-tab"' not in browser_cursor.PAGE
+    assert b'id="entry-panel"' not in browser_cursor.PAGE
+    assert b'/viewer/entry.js' not in browser_cursor.PAGE
 
 
 def test_browser_holds_each_cursor_for_three_seconds_without_delaying_new_positions():
@@ -275,12 +278,12 @@ for (const [name, label] of [['square', 'Upload photos drop zone'], ['card', 'Ac
   object.listeners.keydown({key: 'ArrowRight', preventDefault() {}});
   assert.equal(destination.classes.has('complete'), false);
 }
-element('#entry-tab').listeners.click();
+element('#viewer-tab').listeners.click();
 assert.equal(element('#drag-panel').hidden, true);
-assert.equal(element('#entry-tab').attrs['aria-selected'], 'true');
+assert.equal(element('#viewer-tab').attrs['aria-selected'], 'true');
 element('#drag-tab').listeners.click();
 assert.equal(element('#drag-panel').hidden, false);
-assert.equal(element('#entry-panel').hidden, true);
+assert.equal(element('#viewer-panel').hidden, true);
 
 setImmediate(async () => {
   for (const value of ['0', '40', '100']) {
