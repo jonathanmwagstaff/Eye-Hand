@@ -1,0 +1,63 @@
+{"time": "2026-10-27T23:10:42", "event": "moved", "detail": "pressed in the app"}
+{"time": "2026-10-27T23:14:28", "event": "stereo_installed", "detail": "calib/raw/stereo/20261027-231108"}
+{"time": "2026-10-27T23:45:22", "event": "stereo_installed", "detail": "calib/raw/stereo/20261027-234203"}
+{"time": "2026-10-28T06:16:12", "event": "c7_alarm", "detail": "face epipolar 16.7 px > 4.7 px"}
+{"time": "2026-10-28T06:16:14", "event": "c7_alarm", "detail": "face epipolar 18.8 px > 4.7 px"}
+{"time": "2026-10-28T06:18:08", "event": "c7_alarm", "detail": "face epipolar 48.3 px > 4.7 px"}
+{"time": "2026-10-28T06:18:12", "event": "c7_alarm", "detail": "face epipolar 48.6 px > 4.7 px"}
+{"time": "2026-10-28T06:18:20", "event": "c7_alarm", "detail": "face epipolar 57.4 px > 4.7 px"}
+{"time": "2026-10-28T06:18:24", "event": "c7_alarm", "detail": "face epipolar 47.3 px > 4.7 px"}
+{"time": "2026-10-28T06:18:28", "event": "c7_alarm", "detail": "face epipolar 45.8 px > 4.7 px"}
+{"time": "2026-10-28T06:18:35", "event": "c7_alarm", "detail": "face epipolar 48.8 px > 4.7 px"}
+{"time": "2026-10-28T06:18:40", "event": "c7_alarm", "detail": "face epipolar 45.9 px > 4.7 px"}
+{"time": "2026-10-28T06:18:46", "event": "c7_alarm", "detail": "face epipolar 49.3 px > 4.7 px"}
+{"time": "2026-10-28T06:18:55", "event": "c7_alarm", "detail": "face epipolar 46.5 px > 4.7 px"}
+{"time": "2026-10-28T06:18:59", "event": "c7_alarm", "detail": "face epipolar 46.7 px > 4.7 px"}
+{"time": "2026-10-28T06:19:06", "event": "c7_alarm", "detail": "face epipolar 55.7 px > 4.7 px"}
+{"time": "2026-10-28T06:19:10", "event": "c7_alarm", "detail": "face epipolar 54.8 px > 4.7 px"}
+{"time": "2026-10-28T06:19:12", "event": "c7_alarm", "detail": "face epipolar 54.2 px > 4.7 px"}
+{"time": "2026-10-28T06:19:22", "event": "c7_alarm", "detail": "face epipolar 54.5 px > 4.7 px"}
+{"time": "2026-10-28T06:19:26", "event": "c7_alarm", "detail": "face epipolar 54.9 px > 4.7 px"}
+{"time": "2026-10-28T06:19:31", "event": "c7_alarm", "detail": "face epipolar 54.5 px > 4.7 px"}
+{"time": "2026-10-28T06:19:34", "event": "c7_alarm", "detail": "face epipolar 54.3 px > 4.7 px"}
+{"time": "2026-10-28T06:19:36", "event": "c7_alarm", "detail": "face epipolar 54.3 px > 4.7 px"}
+{"time": "2026-10-28T06:19:38", "event": "c7_alarm", "detail": "face epipolar 54.3 px > 4.7 px"}
+{"time": "2026-10-28T06:19:42", "event": "c7_alarm", "detail": "face epipolar 54.3 px > 4.7 px"}
+{"time": "2026-10-28T06:19:47", "event": "c7_alarm", "detail": "face epipolar 54.5 px > 4.7 px"}
+{"time": "2026-10-28T06:19:49", "event": "c7_alarm", "detail": "face epipolar 54.4 px > 4.7 px"}
+{"time": "2026-10-28T06:19:52", "event": "c7_alarm", "detail": "face epipolar 54.1 px > 4.7 px"}
+{"time": "2026-10-28T06:19:54", "event": "c7_alarm", "detail": "face epipolar 54.1 px > 4.7 px"}
+{"time": "2026-10-28T06:19:57", "event": "c7_alarm", "detail": "face epipolar 54.6 px > 4.7 px"}
+{"time": "2026-10-28T06:20:00", "event": "c7_alarm", "detail": "face epipolar 54.1 px > 4.7 px"}
+{"time": "2026-10-28T06:20:03", "event": "c7_alarm", "detail": "face epipolar 54.7 px > 4.7 px"}
+{"time": "2026-10-28T06:20:05", "event": "c7_alarm", "detail": "face epipolar 54.3 px > 4.7 px"}
+{"time": "2026-10-28T06:20:08", "event": "c7_alarm", "detail": "face epipolar 54.5 px > 4.7 px"}
+{"time": "2026-10-28T06:20:10", "event": "c7_alarm", "detail": "face epipolar 54.2 px > 4.7 px"}
+{"time": "2026-10-28T06:20:13", "event": "c7_alarm", "detail": "face epipolar 54.1 px > 4.7 px"}
+{"time": "2026-10-28T06:20:15", "event": "c7_alarm", "detail": "face epipolar 54.1 px > 4.7 px"}
+{"time": "2026-10-28T06:20:18", "event": "c7_alarm", "detail": "face epipolar 54.6 px > 4.7 px"}
+{"time": "2026-10-28T06:20:25", "event": "c7_alarm", "detail": "face epipolar 55.2 px > 4.7 px"}
+{"time": "2026-10-28T06:20:27", "event": "c7_alarm", "detail": "face epipolar 55.5 px > 4.7 px"}
+{"time": "2026-10-28T06:20:29", "event": "c7_alarm", "detail": "face epipolar 55.1 px > 4.7 px"}
+{"time": "2026-10-28T06:20:32", "event": "c7_alarm", "detail": "face epipolar 55.0 px > 4.7 px"}
+{"time": "2026-10-28T06:20:35", "event": "c7_alarm", "detail": "face epipolar 55.2 px > 4.7 px"}
+{"time": "2026-10-28T06:20:39", "event": "c7_alarm", "detail": "face epipolar 54.3 px > 4.7 px"}
+{"time": "2026-10-28T06:20:42", "event": "c7_alarm", "detail": "face epipolar 54.2 px > 4.7 px"}
+{"time": "2026-10-28T06:20:45", "event": "c7_alarm", "detail": "face epipolar 54.6 px > 4.7 px"}
+{"time": "2026-10-28T06:20:48", "event": "c7_alarm", "detail": "face epipolar 54.9 px > 4.7 px"}
+{"time": "2026-10-28T06:20:51", "event": "c7_alarm", "detail": "face epipolar 54.6 px > 4.7 px"}
+{"time": "2026-10-28T06:20:53", "event": "c7_alarm", "detail": "face epipolar 54.4 px > 4.7 px"}
+{"time": "2026-10-28T06:20:55", "event": "c7_alarm", "detail": "face epipolar 54.7 px > 4.7 px"}
+{"time": "2026-10-28T06:20:58", "event": "c7_alarm", "detail": "face epipolar 54.9 px > 4.7 px"}
+{"time": "2026-10-28T06:21:01", "event": "c7_alarm", "detail": "face epipolar 56.0 px > 4.7 px"}
+{"time": "2026-10-28T06:21:03", "event": "c7_alarm", "detail": "face epipolar 55.7 px > 4.7 px"}
+{"time": "2026-10-28T06:21:06", "event": "c7_alarm", "detail": "face epipolar 55.7 px > 4.7 px"}
+{"time": "2026-10-28T06:21:11", "event": "c7_alarm", "detail": "face epipolar 55.3 px > 4.7 px"}
+{"time": "2026-10-28T06:21:16", "event": "c7_alarm", "detail": "face epipolar 55.6 px > 4.7 px"}
+{"time": "2026-10-28T06:21:18", "event": "c7_alarm", "detail": "face epipolar 55.6 px > 4.7 px"}
+{"time": "2026-10-28T06:22:22", "event": "c7_alarm", "detail": "face epipolar 55.7 px > 4.7 px"}
+{"time": "2026-10-28T06:33:39", "event": "c7_alarm", "detail": "face epipolar 49.9 px > 4.7 px"}
+{"time": "2026-10-28T06:34:19", "event": "stereo_installed", "detail": "calib/raw/stereo/20261028-063347"}
+{"time": "2026-10-28T06:47:26", "event": "moved", "detail": "pressed in the app"}
+{"time": "2026-10-28T06:52:17", "event": "stereo_installed", "detail": "calib/raw/stereo/20261028-064811"}
+{"time": "2026-10-28T07:27:24", "event": "c7_alarm", "detail": "room check: a camera turned 0.10\u00b0"}

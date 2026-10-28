@@ -1,0 +1,137 @@
+{
+ "intrinsics": {
+  "L": "e2509057eb280978",
+  "F": "34db39499efe9cdd"
+ },
+ "board": {
+  "name": "print_a4",
+  "squares_x": 11,
+  "squares_y": 8,
+  "square": 24.0,
+  "marker": 18.0,
+  "dictionary": "DICT_5X5_250",
+  "unit": "mm"
+ },
+ "scale": {
+  "x": 1.0,
+  "y": 1.0,
+  "source": "calipers: square 24.000 x 24.000 mm"
+ },
+ "captured": "2026-10-27T23:42:03",
+ "solved": "2026-10-27T23:45:22",
+ "raw_dir": "calib/raw/stereo/20261027-234203",
+ "T_L_F": {
+  "R": [
+   [
+    0.7251298304125784,
+    0.2069593463937507,
+    0.6567758810934646
+   ],
+   [
+    -0.21740564234210666,
+    0.9737912723045905,
+    -0.06682323444149418
+   ],
+   [
+    -0.6533923137929013,
+    -0.09433126164574708,
+    0.7511192297849129
+   ]
+  ],
+  "t_mm": [
+   -594.1580318023493,
+   26.890502530072435,
+   -137.187292930714
+  ]
+ },
+ "baseline_mm": 610.3828464359225,
+ "rms_px": {
+  "L": 0.4416472911834717,
+  "F": 0.4508354663848877
+ },
+ "holdout_epipolar_rms_px": 0.36926661726827575,
+ "insample_epipolar_rms_px": 0.3449865444301009,
+ "drift_deg": 0.2009694974157765,
+ "length_test": {
+  "pairs": 588,
+  "scale": 0.9999038841079415,
+  "rms_mm": 0.16549431093622216,
+  "p95_mm": 0.31858085048712326,
+  "max_mm": 0.5603230945401663
+ },
+ "views_used": 25,
+ "board_positions_mm": {
+  "min": [
+   -346.89982216431474,
+   -157.8492336388941,
+   323.79279694107726
+  ],
+  "max": [
+   24.813354306588803,
+   9.625364110272708,
+   627.787968853379
+  ]
+ },
+ "angle_between_cameras_deg": {
+  "median": 49.22508385260543,
+  "min": 33.878653131210484,
+  "max": 64.14250863974313
+ },
+ "gates": [
+  {
+   "name": "reprojection RMS, camera L (px)",
+   "value": 0.4416472911834717,
+   "limit": 0.7,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "reprojection RMS, camera F (px)",
+   "value": 0.4508354663848877,
+   "limit": 0.7,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "camera movement during the capture (deg)",
+   "value": 0.2009694974157765,
+   "limit": 0.3,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "held-out / in-sample epipolar RMS",
+   "value": 1.0703797676465447,
+   "limit": 1.3,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "held-out epipolar RMS (px)",
+   "value": 0.36926661726827575,
+   "limit": 1.0,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "known-length error, 95th percentile (mm)",
+   "value": 0.31858085048712326,
+   "limit": 1.0,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "views used",
+   "value": 25.0,
+   "limit": 20,
+   "kind": "min",
+   "pass": true
+  }
+ ],
+ "passed": true,
+ "face_epipolar_baseline_px": 1.6552054130123532,
+ "room_refs": {
+  "L": "calib/raw/stereo/20261027-234203/room_L.png",
+  "F": "calib/raw/stereo/20261027-234203/room_F.png"
+ }
+}

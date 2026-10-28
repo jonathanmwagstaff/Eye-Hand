@@ -1,0 +1,12 @@
+{
+  "name": "print_a4",
+  "squares_x": 11,
+  "squares_y": 8,
+  "square": 24.0,
+  "marker": 18.0,
+  "dictionary": "DICT_5X5_250",
+  "unit": "mm",
+  "dpi": 600,
+  "square_mm_rendered": 24.003,
+  "note": "Print at 100 % (no fit-to-page). Measure the square size with calipers."
+}

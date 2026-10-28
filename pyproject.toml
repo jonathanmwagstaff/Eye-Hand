@@ -1,0 +1,32 @@
+[project]
+name = "eyehand"
+version = "0.1.0"
+description = "Stereo eye-to-fingertip ray-cast cursor (MediaPipe + two webcams)"
+authors = [
+    { name = "jonwagstaff", email = "jwagstaff@perchprint.com" }
+]
+requires-python = ">=3.12,<3.13"
+# OpenCV comes from mediapipe (opencv-contrib-python); do not add opencv-python as well,
+# the two packages overwrite each other's cv2 module.
+dependencies = [
+    "mediapipe>=1.2.0",
+    "pillow",
+    "numpy>=2.5.4",
+    "scipy>=1.18.1",
+]
+
+[project.scripts]
+eyehand = "eyehand.cli.main:main"
+
+[build-system]
+requires = ["uv_build>=0.10.2,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["tests"]
+testpaths = ["tests"]

@@ -1,0 +1,54 @@
+# Camera configuration (calibration C0, see docs/CALIBRATION.md).
+#
+# Every intrinsic calibration is only valid for the exact mode and focus below.
+# Changing any of these values invalidates calibrations; see docs/RECALIBRATION.md.
+#
+# Controls are applied after the stream has started (the Feeltek rejects focus
+# changes while idle) and are read back and verified on every start.
+# Exposure unit is 100 us: 83 = 8.3 ms = 1/120 s (flicker-free under 60 Hz mains).
+#
+# exposure_mode:
+#   "manual"    - auto_exposure=1 and exposure_time_absolute from [controls].
+#   "auto-lock" - run auto exposure (frame rate held fixed) for lock_after_frames frames,
+#                 then switch to manual WITHOUT writing a value: the camera keeps the exposure
+#                 and hidden gain auto exposure chose. Needed for camera L, whose manual mode
+#                 lacks the ~20x gain auto mode uses (8.3 ms manual = black in room light).
+#                 The real exposure is then unknown (<= one frame period) and can differ per
+#                 session, so the time offset must be tracked online (CALIBRATION.md C6).
+
+[cameras.L]
+description = "ASUS X1503ZA built-in webcam (Azurewave)"
+device = "/dev/v4l/by-id/usb-Azurewave_USB2.0_HD_UVC_WebCam_0x0001-video-index0"
+usb_id = "13d3:5463"
+width = 1280
+height = 720
+fourcc = "MJPG"
+fps = 30
+exposure_mode = "auto-lock"
+lock_after_frames = 60
+
+[cameras.L.controls]
+exposure_dynamic_framerate = 0     # default 1 silently halves fps in dim light
+gain = 64
+white_balance_automatic = 0
+white_balance_temperature = 4600
+power_line_frequency = 2           # 60 Hz
+
+[cameras.F]
+description = "Feeltek FHD Pro 1080p (Sunplus), on tripod to the user's right"
+device = "/dev/v4l/by-id/usb-SunplusIT_Inc_Feeltek_Full_HD_Webcam_1080P-video-index0"
+usb_id = "1bcf:0b15"
+width = 1280
+height = 960
+fourcc = "MJPG"
+fps = 30
+exposure_mode = "manual"
+
+[cameras.F.controls]
+auto_exposure = 1
+exposure_time_absolute = 83
+white_balance_automatic = 0
+white_balance_temperature = 4250
+power_line_frequency = 2
+focus_automatic_continuous = 0
+focus_absolute = 144             # chosen with `eyehand focus` on 2026-10-27; changing it invalidates C2 and C5

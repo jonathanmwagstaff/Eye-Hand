@@ -1,0 +1,88 @@
+{
+ "intrinsics": {
+  "L": "e2509057eb280978",
+  "F": "34db39499efe9cdd"
+ },
+ "board": {
+  "name": "print_a4",
+  "squares_x": 11,
+  "squares_y": 8,
+  "square": 24.0,
+  "marker": 18.0,
+  "dictionary": "DICT_5X5_250",
+  "unit": "mm"
+ },
+ "scale": {
+  "x": 1.0,
+  "y": 1.0,
+  "source": "calipers: square 24.000 x 24.000 mm"
+ },
+ "captured": "2026-10-28T06:33:47",
+ "solved": "2026-10-28T06:34:19",
+ "raw_dir": "calib/raw/stereo/20261028-063347",
+ "emergency": true,
+ "T_L_F": {
+  "R": [
+   [
+    0.7052562839543773,
+    0.20881434329264278,
+    0.6775028737784994
+   ],
+   [
+    -0.17724745863122554,
+    0.9772247498966,
+    -0.11668387462841347
+   ],
+   [
+    -0.686437843035795,
+    -0.03779362677475763,
+    0.7262057073746911
+   ]
+  ],
+  "t_mm": [
+   -603.2290431049066,
+   44.518394784337715,
+   -122.28732342171033
+  ]
+ },
+ "baseline_mm": 617.1072478824742,
+ "views_used": 3,
+ "length_test": {
+  "p95_mm": 0.258597108954946
+ },
+ "gates": [
+  {
+   "name": "reprojection RMS, camera L (px)",
+   "value": 0.6848386526107788,
+   "limit": 0.7,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "reprojection RMS, camera F (px)",
+   "value": 0.49291256070137024,
+   "limit": 0.7,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "in-sample epipolar RMS (px)",
+   "value": 0.25861354481619303,
+   "limit": 1.0,
+   "kind": "max",
+   "pass": true
+  },
+  {
+   "name": "known-length error (mm)",
+   "value": 0.258597108954946,
+   "limit": 1.0,
+   "kind": "max",
+   "pass": true
+  }
+ ],
+ "passed": true,
+ "room_refs": {
+  "L": "calib/raw/stereo/20261028-063347/room_L.png",
+  "F": "calib/raw/stereo/20261028-063347/room_F.png"
+ }
+}
