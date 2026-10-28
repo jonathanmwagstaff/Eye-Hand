@@ -64,8 +64,12 @@ Choose **Cursor + hand/eye videos** to share GUI tracking while keeping previews
 checks active, or **Cursor only** for the direct pipeline with previews and checks paused.
 Both buttons open the browser. **Stop cursor** returns from cursor-only mode to the GUI;
 either mode button switches after the previous pipeline releases its cameras. Both modes share the same eye/hand settings and calibration.
-Neither mode smooths or interpolates movement. Each cursor updates immediately on a valid
-position and holds its last valid position for up to three seconds during tracking loss,
+Both modes stabilize the index and thumb tips relative to the wrist and four knuckles in
+3D. Palm translation and rotation carry the tips immediately; changes in their offsets
+are smoothed with a 60 ms time constant. If fingertip stereo checks briefly fail, the last
+relationship to the palm predicts the tips for up to 150 ms. This requires a valid palm in
+both cameras; eye and final aiming checks still apply. Pinch detection uses the original
+observations. Each cursor holds its last valid position for up to three seconds during tracking loss,
 then hides. Missing/invalid updates do not extend that timeout; each hand expires independently.
 
 The cursor page has in-page **Move shapes** and **3D Viewer** demo tabs. Move shapes

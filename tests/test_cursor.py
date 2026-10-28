@@ -435,6 +435,99 @@ def two_hand_observations():
     return observations
 
 
+PALM = np.array([[-130., 100., 240.], [-160., 75., 240.], [-140., 70., 240.],
+                 [-120., 75., 240.], [-100., 85., 240.]])
+TIPS = np.array([[-150., 60., 200.], [-145., 60., 200.]])
+
+
+def palm_observations(t_ms, palm=PALM, tips=TIPS):
+    pair = []
+    for transform in (np.eye(4), T_F_L):
+        hand = np.zeros((21, 2))
+        hand[[0, 5, 9, 13, 17]] = project(palm, transform)
+        hand[[8, 4]] = project(tips, transform)
+        face = np.zeros((478, 2))
+        face[RIGHT_IRIS] = project(np.array([[-100., 50., 600.]]), transform)[0]
+        pair.append(Landmarks(t_ms, face, [("Right", 0.99, hand)]))
+    return pair
+
+
+def stabilized_sample(stabilizer, pair):
+    return browser_cursor._pointer_samples(*pair, "R", {"L": INTR_L, "F": INTR_F},
+                                           T_F_L, T_S_L, SCREEN_MM, stabilizer=stabilizer)["R"]
+
+
+def test_palm_relative_stabilization_reduces_fingertip_jitter():
+    stabilizer = cursor.FingertipStabilizer()
+    stabilized_sample(stabilizer, palm_observations(0))
+    errors = []
+    for i in range(1, 61):
+        noisy = TIPS + [2 * (-1) ** i, 0, 0]
+        result = stabilized_sample(stabilizer, palm_observations(i * 33, tips=noisy))
+        assert result["valid"] and not result["predicted"]
+        errors.append(result["hand_mm"][0] - 146.25)
+    assert np.sqrt(np.mean(np.square(errors))) < 1  # raw fingertip noise is 2 mm RMS
+
+
+def test_palm_motion_carries_tips_without_smoothing_delay():
+    stabilizer = cursor.FingertipStabilizer()
+    stabilized_sample(stabilizer, palm_observations(0))
+    angle = 0.15
+    R = np.array([[np.cos(angle), -np.sin(angle), 0],
+                  [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
+    centre = PALM.mean(axis=0)
+    palm = (PALM - centre) @ R + centre + [12, 5, 10]
+    tips = (TIPS - centre) @ R + centre + [12, 5, 10]
+    result = stabilized_sample(stabilizer, palm_observations(33, palm, tips))
+    assert result["valid"]
+    expected = (0.25 * tips[0] + 0.75 * tips[1]) * [-1, 1, -1]
+    np.testing.assert_allclose(result["hand_mm"], expected, atol=1e-6)
+
+
+def test_prediction_preserves_palm_relationship_and_expires_without_renewal():
+    stabilizer = cursor.FingertipStabilizer()
+    stabilized_sample(stabilizer, palm_observations(0))
+    for t in (33, 99, 150, 151):
+        shift = np.array([t / 10, 0, 0])
+        pair = palm_observations(t, PALM + shift, TIPS + shift)
+        pair[1].right_hand()[[8, 4], 1] += 80
+        result = stabilized_sample(stabilizer, pair)
+        if t <= 150:
+            assert result["valid"] and result["predicted"]
+            np.testing.assert_allclose(result["hand_mm"], [146.25 - shift[0], 60, -200], atol=1e-6)
+            assert result["pinch_views"] == browser_cursor._pinch_views(*pair, "R")
+        else:
+            assert not result["valid"] and "reprojection" in result["reason"]
+    # Reacquisition starts with the measured tips, not an expired offset.
+    result = stabilized_sample(stabilizer, palm_observations(184, tips=TIPS + [10, 0, 0]))
+    assert result["valid"] and not result["predicted"]
+    assert result["hand_mm"][0] == pytest.approx(136.25)
+
+
+def test_prediction_requires_hand_eye_and_aligned_frames():
+    stabilizer = cursor.FingertipStabilizer()
+    stabilized_sample(stabilizer, palm_observations(0))
+    a, b = palm_observations(33)
+    b.hands = []
+    assert not stabilized_sample(stabilizer, (a, b))["valid"]
+    a, b = palm_observations(66)
+    b.face = None
+    assert not stabilized_sample(stabilizer, (a, b))["valid"]
+    a, b = palm_observations(99)
+    b.t_ms += 30
+    assert not stabilized_sample(stabilizer, (a, b))["valid"]
+
+
+def test_bad_palm_does_not_reject_valid_fingertips_or_preserve_prediction():
+    stabilizer = cursor.FingertipStabilizer()
+    stabilized_sample(stabilizer, palm_observations(0))
+    a, b = palm_observations(33)
+    b.right_hand()[[0, 5, 9, 13, 17], 1] += 80
+    result = stabilized_sample(stabilizer, (a, b))
+    assert result["valid"] and not result["predicted"]
+    assert "R" not in stabilizer.hands
+
+
 def test_independent_hands_and_selected_eye():
     a, b = two_hand_observations()
     intr = {"L": INTR_L, "F": INTR_F}

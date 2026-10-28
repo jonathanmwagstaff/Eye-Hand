@@ -97,7 +97,8 @@ def test_gui_cursor_publishes_both_hands_and_rejects_stale_frames(monkeypatch):
     solve = Mock(return_value={"L": {"valid": True}, "R": {"valid": False}})
     monkeypatch.setattr("eyehand.app.browser_cursor._pointer_samples", solve)
     App._publish_cursor(app, snaps)
-    solve.assert_called_once_with(a, b, "L", *geometry, thumb_weight=0.25)
+    solve.assert_called_once_with(a, b, "L", *geometry, thumb_weight=0.25,
+                                  stabilizer=samples.fingertips)
     assert samples.after(0)[1]["primary_hand"] == "L"
     a.t_ms -= 1000
     b.t_ms -= 1000

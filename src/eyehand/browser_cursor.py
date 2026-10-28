@@ -495,6 +495,7 @@ class Samples:
         self._condition = threading.Condition()
         self._seq = 0
         self._sample = {"valid": False, "reason": "Starting cameras…"}
+        self.fingertips = cursor.FingertipStabilizer()
         self._settings = {"eye": "R", "primary_hand": "R", "thumb_weight": 0.75, "release_sensitivity": 0.5}
 
     def settings(self) -> dict:
@@ -672,18 +673,26 @@ def _pinch_views(a: Landmarks, b: Landmarks, side: str) -> dict[str, float]:
     return ratios
 
 
-def _pointer_samples(a, b, eye, intr, T_F_L, T_S_L, screen_mm, *, thumb_weight=0.75) -> dict:
+def _pointer_samples(a, b, eye, intr, T_F_L, T_S_L, screen_mm, *, thumb_weight=0.75,
+                     stabilizer=None) -> dict:
     pointers = {}
     for hand in ("L", "R"):
         try:
             if abs(a.t_ms - b.t_ms) > MAX_PAIR_GAP_MS:
                 raise cursor.InvalidPointer("Waiting for aligned frames")
             px_L, px_F = _landmark_pixels(a, b, eye, hand)
+            predicting = False
+            if stabilizer is not None:
+                palm_ids = [0, 5, 9, 13, 17]  # wrist and the four knuckles
+                px_L, px_F, predicting = stabilizer.stabilize(
+                    hand, (a.t_ms + b.t_ms) / 2, a.hand(hand)[palm_ids], b.hand(hand)[palm_ids],
+                    px_L, px_F, intr["L"], intr["F"], T_F_L)
             point = cursor.solve_pointer(px_L, px_F, intr["L"], intr["F"], T_F_L, T_S_L, screen_mm,
                                          thumb_weight=thumb_weight)
             pointers[hand] = {"valid": True, "x": point.x_norm, "y": point.y_norm,
                               "reprojection_px": point.reprojection_px,
-                              "ray_angle_deg": point.ray_angle_deg, "hand_mm": point.hand_mm}
+                              "ray_angle_deg": point.ray_angle_deg, "hand_mm": point.hand_mm,
+                              "predicted": predicting}
         except cursor.InvalidPointer as exc:
             pointers[hand] = {"valid": False, "reason": str(exc)}
         views = _pinch_views(a, b, hand)
@@ -749,7 +758,7 @@ def run(port: int = 8765, *, stop_event: threading.Event | None = None,
                 continue
             last_pair = pair
             pointers = _pointer_samples(a, b, settings["eye"], intr, T_F_L, T_S_L, screen_mm,
-                                        thumb_weight=settings["thumb_weight"])
+                                        thumb_weight=settings["thumb_weight"], stabilizer=samples.fingertips)
             samples.publish({"pointers": pointers, **settings})
     except KeyboardInterrupt:
         print("\nStopped.")

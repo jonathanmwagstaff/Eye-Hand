@@ -1029,7 +1029,8 @@ class App(tk.Tk):
             return
         settings = self.cursor_samples.settings()
         pointers = browser_cursor._pointer_samples(a, b, settings["eye"], *self.cursor_geometry,
-                                                  thumb_weight=settings["thumb_weight"])
+                                                  thumb_weight=settings["thumb_weight"],
+                                                  stabilizer=self.cursor_samples.fingertips)
         self.cursor_samples.publish({"pointers": pointers, **settings})
 
     def _monitor_warning(self) -> None:
