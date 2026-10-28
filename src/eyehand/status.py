@@ -80,12 +80,14 @@ def _stereo_status(intr_L, intr_F, calib: Path, events: list[dict]) -> Status:
     want = {"L": stereo.intrinsics_fingerprint(intr_L), "F": stereo.intrinsics_fingerprint(intr_F)}
     if result["intrinsics"] != want:
         return Status("C5", name, STALE, "a lens calibration was redone since", action)
-    if not result["passed"]:
+    if not result["passed"] and not result.get("accepted_failed_gates"):
         return Status("C5", name, FAILED, "result did not pass its gates", action)
     later = [e for e in events if e["time"] > result["solved"]]
     moved = [e for e in later if e["event"] == "moved"]
     if moved:
         return Status("C5", name, STALE, f"camera marked as moved at {moved[-1]['time']}", action)
+    if not result["passed"]:
+        return Status("C5", name, CHECK, "failed accuracy checks; explicitly accepted anyway", action)
     alarms = [e for e in later if e["event"] == "c7_alarm"]
     if alarms:
         return Status("C5", name, CHECK, f"health monitor alarm at {alarms[-1]['time']}:"

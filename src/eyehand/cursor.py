@@ -24,6 +24,7 @@ class PointerPosition:
     y_norm: float
     reprojection_px: float
     ray_angle_deg: float
+    hand_mm: tuple[float, float, float]
 
 
 def _project(points: np.ndarray, intr: Intrinsics) -> np.ndarray:
@@ -33,11 +34,13 @@ def _project(points: np.ndarray, intr: Intrinsics) -> np.ndarray:
 
 def solve_pointer(px_L: np.ndarray, px_F: np.ndarray, intr_L: Intrinsics,
                   intr_F: Intrinsics, T_F_L: np.ndarray, T_S_L: np.ndarray,
-                  screen_mm: tuple[float, float]) -> PointerPosition:
+                  screen_mm: tuple[float, float], *, thumb_weight: float = 0.75) -> PointerPosition:
     """Triangulate eye and tips, then aim through the estimated pinch point.
 
     Inputs are [eye, index] or [eye, index, thumb], in camera pixels.
     """
+    if not np.isfinite(thumb_weight) or not 0 <= thumb_weight <= 1:
+        raise InvalidPointer("thumb weight must be between 0 and 1")
     px_L = np.asarray(px_L, float).reshape(-1, 2)
     px_F = np.asarray(px_F, float).reshape(-1, 2)
     if px_L.shape != px_F.shape or len(px_L) not in (2, 3):
@@ -68,7 +71,7 @@ def solve_pointer(px_L: np.ndarray, px_F: np.ndarray, intr_L: Intrinsics,
     points_S = (T_S_L[:3, :3] @ points_L.T).T + T_S_L[:3, 3]
     eye, tip = points_S[:2]
     if len(points_S) == 3:
-        tip = 0.25 * tip + 0.75 * points_S[2]
+        tip = (1 - thumb_weight) * tip + thumb_weight * points_S[2]
     if eye[2] >= tip[2] or tip[2] >= 0:
         raise InvalidPointer("finger is not between eye and screen")
     s = eye[2] / (eye[2] - tip[2])
@@ -76,4 +79,4 @@ def solve_pointer(px_L: np.ndarray, px_F: np.ndarray, intr_L: Intrinsics,
     x, y = float(hit[0] / screen_mm[0]), float(hit[1] / screen_mm[1])
     if not np.isfinite((x, y)).all() or not (0 <= x <= 1 and 0 <= y <= 1):
         raise InvalidPointer("aim is outside the screen")
-    return PointerPosition(x, y, reprojection, ray_angle)
+    return PointerPosition(x, y, reprojection, ray_angle, tuple(float(v) for v in tip))

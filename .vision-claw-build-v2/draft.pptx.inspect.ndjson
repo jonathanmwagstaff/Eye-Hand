@@ -1,0 +1,28 @@
+{"kind":"deck","id":"pr/xklgqh","name":"Deck"}
+{"kind":"layout","id":"ly/n61cb6ls","editable":false,"name":"Master","type":"master"}
+{"kind":"layout","id":"ly/by1gry18","editable":false,"name":"Title Slide","type":"title","placeholders":[{"name":"title","type":"title"},{"name":"subtitle","type":"subtitle"}]}
+{"kind":"layout","id":"ly/8jmtsne9","editable":false,"name":"Section Header","type":"sectionHeader","placeholders":[{"name":"title","type":"title"}]}
+{"kind":"layout","id":"ly/nqtobaxg","editable":false,"name":"Title and Body","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/29wz2hgz","editable":false,"name":"Title and Two Column","type":"twoColTx","placeholders":[{"name":"title","type":"title"},{"name":"Left column","type":"body"},{"name":"Right column","type":"body"}]}
+{"kind":"layout","id":"ly/x4bexg3m","editable":false,"name":"Title and One Column","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/do3qlkn6","editable":false,"name":"Blank","type":"blank"}
+{"kind":"slide","id":"sl/0k2ehr","slideIndex":0,"layout":{"id":"ly/do3qlkn6","name":"Blank"},"title":"Hands busy.","textShapes":1}
+{"kind":"textbox","id":"sh/w3utgf29","slideIndex":0,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Hands busy.\nKeyboard waiting.","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/mt8ry1cj","slideIndex":0,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"lab technicians v2"}
+{"kind":"notes","id":"nt/0k2ehr","slideIndex":0,"text":""}
+{"kind":"slide","id":"sl/mczdru","slideIndex":1,"layout":{"id":"ly/do3qlkn6","name":"Blank"},"title":"Patient care.","textShapes":1}
+{"kind":"textbox","id":"sh/bmtwnmpw","slideIndex":1,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Patient care.\nComputer interruptions.","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/183et87u","slideIndex":1,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"dentist v2"}
+{"kind":"notes","id":"nt/mczdru","slideIndex":1,"text":""}
+{"kind":"slide","id":"sl/fpejxw","slideIndex":2,"layout":{"id":"ly/do3qlkn6","name":"Blank"},"title":"Another click.","textShapes":1}
+{"kind":"textbox","id":"sh/u907mtcr","slideIndex":2,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Another click.\nAnother glove change.","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/4ji54ju9","slideIndex":2,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"changing gloves v2"}
+{"kind":"notes","id":"nt/fpejxw","slideIndex":2,"text":""}
+{"kind":"slide","id":"sl/h3jpes","slideIndex":3,"layout":{"id":"ly/do3qlkn6","name":"Blank"},"title":"Introducing","textShapes":1}
+{"kind":"textbox","id":"sh/rutc32tw","slideIndex":3,"position":{"left":72,"top":185,"width":510,"height":280},"text":"Introducing\ntouchless\ncontrol","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/h03at4vi","slideIndex":3,"position":{"left":630,"top":111.92,"width":565,"height":500.15},"fit":"contain","name":"","alt":"vision claw crab logo"}
+{"kind":"notes","id":"nt/h3jpes","slideIndex":3,"text":""}
+{"kind":"slide","id":"sl/p8lc0s","slideIndex":4,"layout":{"id":"ly/do3qlkn6","name":"Blank"},"title":"Eye, hand, screen.","textShapes":1}
+{"kind":"textbox","id":"sh/ep4bqp4r","slideIndex":4,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Eye, hand, screen.\nAligned.","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/oj2lcryh","slideIndex":4,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"eye hand screen alignment v2"}
+{"kind":"notes","id":"nt/p8lc0s","slideIndex":4,"text":""}

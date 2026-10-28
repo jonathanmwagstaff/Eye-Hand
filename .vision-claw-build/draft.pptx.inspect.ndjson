@@ -1,0 +1,28 @@
+{"kind":"deck","id":"pr/7y9so8","name":"Deck"}
+{"kind":"layout","id":"ly/7atofylk","editable":false,"name":"Master","type":"master"}
+{"kind":"layout","id":"ly/q1s3i10r","editable":false,"name":"Title Slide","type":"title","placeholders":[{"name":"title","type":"title"},{"name":"subtitle","type":"subtitle"}]}
+{"kind":"layout","id":"ly/0f6x8v6p","editable":false,"name":"Section Header","type":"sectionHeader","placeholders":[{"name":"title","type":"title"}]}
+{"kind":"layout","id":"ly/jap0vip8","editable":false,"name":"Title and Body","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/nq503ulg","editable":false,"name":"Title and Two Column","type":"twoColTx","placeholders":[{"name":"title","type":"title"},{"name":"Left column","type":"body"},{"name":"Right column","type":"body"}]}
+{"kind":"layout","id":"ly/bmdkra50","editable":false,"name":"Title and One Column","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/sf6dsnyd","editable":false,"name":"Blank","type":"blank"}
+{"kind":"slide","id":"sl/1yyfg0","slideIndex":0,"layout":{"id":"ly/sf6dsnyd","name":"Blank"},"title":"Lab work shouldn’t require keyboards and mice","textShapes":1,"backgroundColor":"rgba(255,255,255,1)"}
+{"kind":"textbox","id":"sh/wjylgza5","slideIndex":0,"position":{"left":64,"top":42,"width":1152,"height":76},"text":"Lab work shouldn’t require keyboards and mice","geometry":"rect","lineWidth":0,"style":{"fontSize":44,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/6x4zatof","slideIndex":0,"position":{"left":138.34,"top":140,"width":1003.31,"height":565},"fit":"contain","name":"","alt":"lab technicians v2"}
+{"kind":"notes","id":"nt/1yyfg0","slideIndex":0,"text":""}
+{"kind":"slide","id":"sl/0rn081","slideIndex":1,"layout":{"id":"ly/sf6dsnyd","name":"Blank"},"title":"Patient care shouldn’t require keyboards and mice","textShapes":1,"backgroundColor":"rgba(255,255,255,1)"}
+{"kind":"textbox","id":"sh/j2lwv6lk","slideIndex":1,"position":{"left":64,"top":42,"width":1152,"height":76},"text":"Patient care shouldn’t require keyboards and mice","geometry":"rect","lineWidth":0,"style":{"fontSize":44,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/tk3ilczy","slideIndex":1,"position":{"left":138.34,"top":140,"width":1003.31,"height":565},"fit":"contain","name":"","alt":"dentist v2"}
+{"kind":"notes","id":"nt/0rn081","slideIndex":1,"text":""}
+{"kind":"slide","id":"sl/6kn1gt","slideIndex":2,"layout":{"id":"ly/sf6dsnyd","name":"Blank"},"title":"Computer use interrupts gloved work","textShapes":1,"backgroundColor":"rgba(255,255,255,1)"}
+{"kind":"textbox","id":"sh/tcn25kv6","slideIndex":2,"position":{"left":64,"top":42,"width":1152,"height":76},"text":"Computer use interrupts gloved work","geometry":"rect","lineWidth":0,"style":{"fontSize":44,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/repgvyt4","slideIndex":2,"position":{"left":138.34,"top":140,"width":1003.31,"height":565},"fit":"contain","name":"","alt":"changing gloves v2"}
+{"kind":"notes","id":"nt/6kn1gt","slideIndex":2,"text":""}
+{"kind":"slide","id":"sl/ppir0w","slideIndex":3,"layout":{"id":"ly/sf6dsnyd","name":"Blank"},"title":"Introducing","textShapes":1,"backgroundColor":"rgba(255,255,255,1)"}
+{"kind":"textbox","id":"sh/ozah4v6x","slideIndex":3,"position":{"left":64,"top":42,"width":1152,"height":76},"text":"Introducing","geometry":"rect","lineWidth":0,"style":{"fontSize":44,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/6d4nqx8b","slideIndex":3,"position":{"left":335,"top":132.51,"width":610,"height":539.98},"fit":"contain","name":"","alt":"vision claw crab logo"}
+{"kind":"notes","id":"nt/ppir0w","slideIndex":3,"text":""}
+{"kind":"slide","id":"sl/elh99a","slideIndex":4,"layout":{"id":"ly/sf6dsnyd","name":"Blank"},"title":"The innovation: eye, hand, screen alignment","textShapes":1,"backgroundColor":"rgba(255,255,255,1)"}
+{"kind":"textbox","id":"sh/i9wfqp07","slideIndex":4,"position":{"left":64,"top":42,"width":1152,"height":76},"text":"The innovation: eye, hand, screen alignment","geometry":"rect","lineWidth":0,"style":{"fontSize":44,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/8bi9wn6p","slideIndex":4,"position":{"left":138.34,"top":140,"width":1003.31,"height":565},"fit":"contain","name":"","alt":"eye hand screen alignment v2"}
+{"kind":"notes","id":"nt/elh99a","slideIndex":4,"text":""}

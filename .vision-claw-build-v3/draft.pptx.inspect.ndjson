@@ -1,0 +1,32 @@
+{"kind":"deck","id":"pr/apjsj6","name":"Deck"}
+{"kind":"layout","id":"ly/wry5sni5","editable":false,"name":"Master","type":"master"}
+{"kind":"layout","id":"ly/ry9krit8","editable":false,"name":"Title Slide","type":"title","placeholders":[{"name":"title","type":"title"},{"name":"subtitle","type":"subtitle"}]}
+{"kind":"layout","id":"ly/na1of690","editable":false,"name":"Section Header","type":"sectionHeader","placeholders":[{"name":"title","type":"title"}]}
+{"kind":"layout","id":"ly/donexkn2","editable":false,"name":"Title and Body","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/1wva94ba","editable":false,"name":"Title and Two Column","type":"twoColTx","placeholders":[{"name":"title","type":"title"},{"name":"Left column","type":"body"},{"name":"Right column","type":"body"}]}
+{"kind":"layout","id":"ly/pwbmtsvy","editable":false,"name":"Title and One Column","type":"tx","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"}]}
+{"kind":"layout","id":"ly/nil4n25c","editable":false,"name":"Blank","type":"blank"}
+{"kind":"slide","id":"sl/ga0ht7","slideIndex":0,"layout":{"id":"ly/nil4n25c","name":"Blank"},"title":"Laboratory work shouldn’t require","textShapes":1}
+{"kind":"textbox","id":"sh/dofyp8bu","slideIndex":0,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Laboratory work shouldn’t require\nkeyboard contact","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/j2d43yxg","slideIndex":0,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"lab technicians v2"}
+{"kind":"notes","id":"nt/ga0ht7","slideIndex":0,"text":""}
+{"kind":"slide","id":"sl/9izcpn","slideIndex":1,"layout":{"id":"ly/nil4n25c","name":"Blank"},"title":"Healthcare professionals need","textShapes":1}
+{"kind":"textbox","id":"sh/jux07218","slideIndex":1,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Healthcare professionals need\ntouchless computer control","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/h8nadc32","slideIndex":1,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"dentist v2"}
+{"kind":"notes","id":"nt/9izcpn","slideIndex":1,"text":""}
+{"kind":"slide","id":"sl/tlvvfy","slideIndex":2,"layout":{"id":"ly/nil4n25c","name":"Blank"},"title":"Glove changes interrupt","textShapes":1}
+{"kind":"textbox","id":"sh/lwzul8ze","slideIndex":2,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Glove changes interrupt\nhealthcare work","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/7udcnihs","slideIndex":2,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"changing gloves v2"}
+{"kind":"notes","id":"nt/tlvvfy","slideIndex":2,"text":""}
+{"kind":"slide","id":"sl/0a25z9","slideIndex":3,"layout":{"id":"ly/nil4n25c","name":"Blank"},"title":"CAD parts can be difficult","textShapes":1}
+{"kind":"textbox","id":"sh/v2hk3a9s","slideIndex":3,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"CAD parts can be difficult\nto manipulate in 2D","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/5obuh87e","slideIndex":3,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"mechanical engineer cad"}
+{"kind":"notes","id":"nt/0a25z9","slideIndex":3,"text":""}
+{"kind":"slide","id":"sl/nfxt67","slideIndex":4,"layout":{"id":"ly/nil4n25c","name":"Blank"},"title":"Introducing","textShapes":1}
+{"kind":"textbox","id":"sh/nmpwbqp4","slideIndex":4,"position":{"left":72,"top":185,"width":510,"height":280},"text":"Introducing\ntouchless\ncontrol","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/9sjup4b6","slideIndex":4,"position":{"left":630,"top":111.92,"width":565,"height":500.15},"fit":"contain","name":"","alt":"vision claw crab logo"}
+{"kind":"notes","id":"nt/nfxt67","slideIndex":4,"text":""}
+{"kind":"slide","id":"sl/gejzu4","slideIndex":5,"layout":{"id":"ly/nil4n25c","name":"Blank"},"title":"Eye, hand, screen.","textShapes":1}
+{"kind":"textbox","id":"sh/t4r25gzq","slideIndex":5,"position":{"left":72,"top":42,"width":1136,"height":172},"text":"Eye, hand, screen.\nAligned.","geometry":"rect","lineWidth":0,"style":{"fontSize":64,"typeface":"Arial","color":"#071C49","bold":true,"alignment":"left"}}
+{"kind":"image","id":"im/7idkzmtc","slideIndex":5,"position":{"left":294.47,"top":228,"width":831.06,"height":468},"fit":"contain","name":"","alt":"eye hand screen alignment v2"}
+{"kind":"notes","id":"nt/gejzu4","slideIndex":5,"text":""}

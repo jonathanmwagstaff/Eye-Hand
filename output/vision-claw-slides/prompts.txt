@@ -1,0 +1,17 @@
+Generated using the built-in image generation tool. Reference: /tmp/codex-clipboard-Era00s.png
+Shared style: Match reference illustration: clean dark navy outlines, softly shaded warm skin, simplified realistic adult anatomy, cornflower blue clothing, restrained gradients. Transparent backgrounds; no watermarks.
+
+lab-technicians
+Two lab technicians wearing light blue lab coats, protective goggles and nitrile gloves beside a compact laboratory bench with sample tubes and a pipette. One handles a sample while the other pauses with a gloved hand just above a computer keyboard and mouse, conveying the awkwardness of touching computer controls during lab work. Clear uncluttered composition, waist-up figures, monitor at one side.
+
+dentist
+A masked dentist wearing blue scrubs and blue nitrile gloves, waist-up three-quarter view, beside a partially visible reclined dental patient and a small computer workstation. Dentist holds a dental instrument in one hand while the other gloved hand hesitates just above a mouse, conveying workflow interruption. Tasteful clinical illustration, no gore, minimal supporting equipment.
+
+changing-gloves
+A healthcare professional in light blue scrubs shown chest-up actively changing disposable blue nitrile gloves: one hand pinches the outside cuff of the opposite glove and peels it back inside out, anatomically correct hands and clearly readable glove removal action. A compact keyboard and mouse nearby at the lower side suggest interrupted computer interaction. No extra hands.
+
+vision-claw-logo
+Use case: logo-brand. Design one polished Vision Claw logo. A stylized human claw-pose cursor hand inspired by the hand gesture in the reference, curved index finger and opposing thumb with other fingers loosely curled, integrated with a crisp eye and blue iris in the palm/negative space. Dark navy outlines and blue fills, warm subtle highlights matching reference style. Memorable simple silhouette readable at small sizes. Include exact wordmark 'Vision Claw' below in clean bold navy sans serif. No other text. Not a mechanical claw, not an animal claw.
+
+eye-hand-screen-alignment
+Use case: scientific-educational. Wide side-profile illustration explaining eye-hand-screen alignment. Adult person on the left facing right, wearing blue shirt, looking at a computer monitor at right. Their arm is raised naturally and their NORMAL HUMAN HAND makes the loose claw gesture shown in the reference: thumb opposed to gently curved index finger, remaining fingers naturally curled. Place the hand between the eye and monitor at eye level. ONE perfectly straight dotted blue sight line begins at the visible eye, passes through the open gap between thumb and index finger of the raised hand, and continues to a target point on the monitor screen. Exact collinearity eye -> hand aperture -> screen target. Hand is natural flesh colored, not robotic, no eyeball in hand. Side view must make sightline unmistakable; monitor shown in three-quarter side view so its screen target is visible. Minimal objects, no labels or words.

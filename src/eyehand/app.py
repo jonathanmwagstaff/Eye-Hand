@@ -206,6 +206,7 @@ class App(tk.Tk):
         self.last_frames: dict = {}
         self.captured: queue.Queue = queue.Queue()
         self.solve_result: dict | None = None
+        self.failed_result: dict | None = None
         self.baseline_samples: list[float] = []
         self.target_views = TARGET_VIEWS
         self.health = HealthMonitor()
@@ -216,6 +217,7 @@ class App(tk.Tk):
         self.cursor_thread = None
         self.cursor_stop = threading.Event()
         self.cursor_error = None
+        self.cursor_resume_videos = False
         self.intr: dict[str, Intrinsics | None] = {"L": None, "F": None}
         self.steady: dict = {}
         self.room_meters: dict[str, SteadyMeter] | None = None
@@ -240,7 +242,8 @@ class App(tk.Tk):
         videos = ttk.Frame(self)
         videos.grid(row=2, column=0, sticky="nw", padx=6)
         self.video, self.caption = {}, {}
-        for col, name in enumerate(("L", "F")):
+        # Match physical placement: tripod on the user's left, laptop on the right.
+        for col, name in enumerate(("F", "L")):
             box = ttk.LabelFrame(videos, text=f"Camera {name}: {self.configs[name].description}")
             box.grid(row=0, column=col, padx=4, sticky="n")
             self.video[name] = ttk.Label(box)
@@ -273,7 +276,7 @@ class App(tk.Tk):
 
         buttons = ttk.Frame(side)
         buttons.pack(anchor="w", fill="x")
-        self.btn_cursor = ttk.Button(buttons, text="Cursor with videos", command=self.start_cursor)
+        self.btn_cursor = ttk.Button(buttons, text="Cursor + hand/eye videos", command=self.start_cursor)
         self.btn_direct_cursor = ttk.Button(buttons, text="Cursor only", command=self.start_direct_cursor)
         self.btn_stop_cursor = ttk.Button(buttons, text="Stop cursor", command=self.stop_cursor)
         self.btn_recal = ttk.Button(buttons, text="Recalibrate camera positions",
@@ -288,6 +291,8 @@ class App(tk.Tk):
                                    (self.start_capture if self.target_views == 3
                                     else self.start_recalibration)())
         self.btn_done = ttk.Button(buttons, text="Done", command=self.back_to_place)
+        self.btn_use_failed = ttk.Button(buttons, text="Use calibration anyway (less accurate)",
+                                         command=self.use_failed_calibration)
         self.track_var = tk.BooleanVar(value=True)
         self.chk_track = ttk.Checkbutton(buttons, text="Show eye and finger tracking",
                                          variable=self.track_var, command=self._set_tracking)
@@ -295,22 +300,28 @@ class App(tk.Tk):
 
     def _show_buttons(self) -> None:
         for b in (self.btn_recal, self.btn_moved, self.btn_undo, self.btn_finish,
-                  self.btn_cancel, self.btn_retry, self.btn_done, self.chk_track,
+                  self.btn_cancel, self.btn_retry, self.btn_done, self.btn_use_failed, self.chk_track,
                   self.btn_cursor, self.btn_direct_cursor, self.btn_stop_cursor, self.btn_emergency):
             b.pack_forget()
         layout = {
-            "place": (self.btn_direct_cursor,
-                      self.btn_stop_cursor if self.cursor_server else self.btn_cursor,
+            "place": (self.btn_direct_cursor, self.btn_cursor,
+                      *((self.btn_stop_cursor,) if self.cursor_server else ()),
                       self.btn_emergency, self.btn_recal, self.btn_moved, self.chk_track),
-            "cursor": (self.btn_stop_cursor,),
+            "cursor": (self.btn_direct_cursor, self.btn_cursor, self.btn_stop_cursor),
             "steadycheck": (self.btn_cancel,),
             "capture": (self.btn_undo, self.btn_finish, self.btn_cancel),
             "solving": (),
-            "result": (self.btn_retry, self.btn_done),
+            "result": (self.btn_retry, *((self.btn_use_failed,) if self.failed_result else ()),
+                       self.btn_done),
             "baseline": (self.btn_cancel,),
         }[self.mode]
         for b in layout:
             b.pack(anchor="w", fill="x", pady=2)
+        self.btn_direct_cursor.config(text="Cursor only (active)" if self.mode == "cursor" else "Cursor only")
+        self.btn_direct_cursor.state(["disabled"] if self.mode == "cursor" else ["!disabled"])
+        self.btn_cursor.config(text="Cursor + hand/eye videos (active)" if self.cursor_server
+                               else "Cursor + hand/eye videos")
+        self.btn_cursor.state(["disabled"] if self.cursor_server or self.cursor_resume_videos else ["!disabled"])
         if self.mode == "capture":
             self.progress.grid(row=1, column=0, sticky="w", padx=10)
         else:
@@ -529,6 +540,7 @@ class App(tk.Tk):
     def show_result(self) -> None:
         r = self.solve_result
         self.solve_result = None
+        self.failed_result = None
         if "error" in r:
             self.mode = "result"
             self.header.config(text=f"The solve failed: {r['error']}")
@@ -550,14 +562,28 @@ class App(tk.Tk):
                                 f" {lt['p95_mm']:.2f} mm, cameras {r['baseline_mm'] / 10:.0f} cm"
                                 f" apart, {r['angle_between_cameras_deg']['median']:.0f}° between them.")
         else:
+            self.failed_result = r
             self.mode = "result"
             sound.play("dialog-warning")
             advice = [GATE_ADVICE[k] for g in r["gates"] if not g["pass"]
                       for k in GATE_ADVICE if k in g["name"].lower()]
-            self.header.config(text="Not accurate enough, nothing was changed. "
+            self.header.config(text="Not accurate enough, nothing was changed. Retry or choose "
+                               "Use calibration anyway to apply this estimate despite failed checks. "
                                + " ".join(dict.fromkeys(advice)))
             print(r["gates"] if r.get("emergency") else stereo.format_report(r))
         self._show_buttons()
+
+    def use_failed_calibration(self) -> None:
+        if self.mode != "result" or self.failed_result is None:
+            return
+        result = {**self.failed_result, "accepted_failed_gates": True}
+        stereo.install(result)
+        status.log_event("stereo_installed", f"Accepted failed checks: {result['raw_dir']}")
+        self.failed_result = None
+        self._save_room_refs()
+        self.back_to_place()
+        self.header.config(text="Camera positions applied despite failed accuracy checks. "
+                           "Cursor accuracy may be poor; recalibrate when possible.")
 
     def _save_room_refs(self) -> None:
         """Snapshot of each camera's view (positioning settings) right after a successful
@@ -621,9 +647,12 @@ class App(tk.Tk):
         if self.mode == "cursor":
             if not self.cursor_thread.is_alive():
                 error = self.cursor_error
+                resume_videos = self.cursor_resume_videos
                 self.stop_cursor()
                 if error:
                     self.header.config(text=f"Cursor stopped: {error}")
+                elif resume_videos:
+                    self.start_cursor()
             return
         while not self.captured.empty():
             self._record_view(*self.captured.get())
@@ -898,6 +927,12 @@ class App(tk.Tk):
             self.health_label.config(text=text, fg="#2e7d32")
 
     def start_cursor(self) -> None:
+        if self.mode == "cursor":
+            self.cursor_resume_videos = True
+            self.cursor_stop.set()
+            self.header.config(text="Switching to cursor + videos; releasing cursor-only cameras…")
+            self._show_buttons()
+            return
         if self.mode != "place":
             return
         if self.cursor_server is None:
@@ -948,6 +983,7 @@ class App(tk.Tk):
         self.cursor_thread.start()
 
     def stop_cursor(self) -> None:
+        self.cursor_resume_videos = False
         if self.cursor_thread is not None:
             self.cursor_stop.set()
             self.cursor_thread.join(timeout=0.1)
@@ -986,15 +1022,14 @@ class App(tk.Tk):
         if reason is None:
             if a is None or b is None:
                 reason = "Waiting for both cameras"
-            elif abs(a.t_ms - b.t_ms) > browser_cursor.MAX_PAIR_GAP_MS:
-                reason = "Waiting for aligned frames"
             elif time.monotonic() * 1000 - min(a.t_ms, b.t_ms) > 300:
                 reason = "Waiting for fresh camera frames"
         if reason:
             self.cursor_samples.publish({"valid": False, "reason": reason})
             return
         settings = self.cursor_samples.settings()
-        pointers = browser_cursor._pointer_samples(a, b, settings["eye"], *self.cursor_geometry)
+        pointers = browser_cursor._pointer_samples(a, b, settings["eye"], *self.cursor_geometry,
+                                                  thumb_weight=settings["thumb_weight"])
         self.cursor_samples.publish({"pointers": pointers, **settings})
 
     def _monitor_warning(self) -> None:

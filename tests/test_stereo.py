@@ -94,8 +94,15 @@ def test_emergency_three_pose_fit_and_invalid_capture_count():
     assert not stereo.solve_emergency(noisy, obj_of, INTR_L, INTR_F, SPEC.squares_x)["passed"]
 
 
-def test_epipolar_distance_is_zero_for_true_correspondences():
+@pytest.mark.parametrize("side", [1, -1])
+def test_epipolar_distance_is_zero_for_true_correspondences(side):
     T_F_L = true_T_F_L()
+    if side == -1:
+        T_L_F = np.linalg.inv(T_F_L)
+        rvec, tvec = stereo.from_matrix(T_L_F)
+        rvec[1] *= -1
+        tvec[0] *= -1
+        T_F_L = np.linalg.inv(stereo.to_matrix(rvec, tvec))
     X = np.array([[0, 0, 500.0], [100, -50, 600], [-80, 40, 450]])
     n_L = X[:, :2] / X[:, 2:]
     Xf = (T_F_L[:3, :3] @ X.T).T + T_F_L[:3, 3]

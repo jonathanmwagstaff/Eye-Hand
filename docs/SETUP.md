@@ -104,11 +104,11 @@ Motion blur at 0.3 m/s fingertip speed: 33 ms exposure → 10 mm smear, 8.3 ms �
                      │                                               │
                      └───────────────────────────────────────────────┘
                                        keyboard
-                                                                        [F] Feeltek on tripod
-                          ✋ right index finger (~45 cm from eye)         to the RIGHT,
-                                                                         ~40–60 cm from the
-                                👁  right (dominant) eye, ~60–70 cm       user's line of sight,
-                                     from the screen                     toed in ~30–45°
+ [F] Feeltek on tripod     ✋ right index finger (~45 cm from eye)
+ to the user's LEFT,
+ ~40–60 cm from the              👁  right (dominant) eye, ~60–70 cm
+ user's line of sight,               from the screen
+ toed in ~30–45°
 ```
 
 - **Place the cameras with the Eye-Hand app open** (applications menu, or `uv run eyehand app`).
@@ -117,9 +117,10 @@ Motion blur at 0.3 m/s fingertip speed: 33 ms exposure → 10 mm smear, 8.3 ms �
   largest. Hold the printed board where your hand will be: the side panel shows the angle
   between the two cameras at the board (aim for 30–60°) and each camera's distance. Before
   C1/C2 exist that angle is approximate (nominal lenses), but good enough for placement.
-- **Camera F goes on the right.** You point with the right hand and sight with the right eye.
-  From the right, F sees the index finger in profile, where MediaPipe is most reliable, and
-  sees the right eye unobstructed.
+- **Camera F is on the user's left.** The app shows F on the left and L (the laptop) on
+  the right. Camera IDs identify hardware, not sides. Check that your chosen eye and
+  pointing hand remain visible in both views; re-aim F if the nose or hand hides them.
+  Redo C5 after moving the tripod; keep each camera's lens calibration and focus settings.
 - **Camera L sees the finger almost end-on.** That is unavoidable with a lid camera, and it is
   MediaPipe's worst view. L still measures the finger's left/right and up/down position well;
   F supplies the depth. Prefer pointing poses where the finger is not hidden behind the hand

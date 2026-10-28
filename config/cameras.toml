@@ -35,7 +35,7 @@ white_balance_temperature = 4600
 power_line_frequency = 2           # 60 Hz
 
 [cameras.F]
-description = "Feeltek FHD Pro 1080p (Sunplus), on tripod to the user's right"
+description = "Feeltek FHD Pro 1080p (Sunplus), on tripod to the user's left"
 device = "/dev/v4l/by-id/usb-SunplusIT_Inc_Feeltek_Full_HD_Webcam_1080P-video-index0"
 usb_id = "1bcf:0b15"
 width = 1280

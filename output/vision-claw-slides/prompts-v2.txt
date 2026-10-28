@@ -1,0 +1,17 @@
+Built-in image generation edits, preserving reference style, transparent backgrounds, compositions and props. Vary people subtly with ordinary professional appearances, no distracting accessories.
+
+lab-technicians-v2
+Reference: lab-technicians.png
+Two different lab technicians: a woman in her early 40s with medium olive skin, dark hair in a neat low bun, a slightly longer face and straight eyebrows; and a man in his 30s with light skin, short sandy-blond hair, a somewhat round face and a clean-shaven jaw. Both look like understated ordinary professionals. Preserve the laboratory scene, goggles, gloves, equipment and computer workflow concept.
+
+dentist-v2
+Reference: dentist.png
+The dentist is a woman in her late 30s with medium brown skin, dark brown eyes, neat dark hair tied back low and a slightly oval face, wearing the same blue scrubs, mask and gloves. The patient is a man in his 50s with light skin, short softly graying brown hair and a natural understated face. Preserve the dental scene, mouse interaction and dental instrument. Keep appearance ordinary and quiet.
+
+changing-gloves-v2
+Reference: changing-gloves.png
+The healthcare professional is a man in his late 40s with light-medium warm skin, short salt-and-pepper hair with a modest receding hairline, a slightly broader face and subtle age lines, clean-shaven. He must look clearly different from the young brown-haired man in the original. Preserve blue scrubs, two anatomically correct hands actively changing blue gloves, keyboard and mouse.
+
+eye-hand-screen-alignment-v2
+Reference: eye-hand-screen-alignment.png
+The person is a woman in her early 30s with light warm skin, straight medium-brown hair gathered in a simple low ponytail, a softly rounded face and a modest natural nose. No jewelry or prominent accessories. Preserve the exact side view composition: eye, natural flesh-colored claw-pose hand opening and monitor target are collinear, with one straight dotted blue sight line from the eye through the hand opening to the screen. Preserve the blue shirt and normal human hand.

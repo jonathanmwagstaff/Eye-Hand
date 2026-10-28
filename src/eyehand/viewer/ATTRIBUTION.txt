@@ -1,0 +1,5 @@
+Toroidal propeller by Akshay Venugopal
+Source: user-provided toroidal-propeller-by-akshay venugopal.zip
+Mesh: 3''T_Prop_CCW.STL (unmodified).
+The archive contains no license; redistribution permission has not been verified.
+Three.js v0.160.1: MIT license, see THREE-LICENSE.txt.

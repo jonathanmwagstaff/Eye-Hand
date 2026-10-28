@@ -22,8 +22,11 @@ applications menu, with no terminal and no AI needed.
    panel shows which areas still need a view, near and far. After 25 views covering the
    space, it solves by itself (or press "Finish now").
 4. If the result passes its gates, it is installed and the old one is kept in
-   `calib/history/`. If it fails, nothing changes, and the app says why in plain words
-   (stiller board, a camera moved during the capture, and so on). Press "Try again".
+   `calib/history/`. If accuracy checks fail, nothing changes automatically, and the app says
+   why. Press "Try again", or **"Use calibration anyway (less accurate)"** to apply the
+   estimate explicitly. The previous calibration is kept in history; the new one retains
+   its failed checks and shows a warning in status, but can be used by the cursor.
+   This option is unavailable if the solver errored without producing an estimate.
 5. **Last step:** sit as you will when pointing and look at the screen for a few seconds.
    This records the face-check baseline that C7 compares against from then on.
 

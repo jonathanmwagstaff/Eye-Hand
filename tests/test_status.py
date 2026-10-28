@@ -1,6 +1,7 @@
 import json
 
 import numpy as np
+import pytest
 
 from eyehand import status, stereo
 from eyehand.config import load_camera_configs
@@ -56,6 +57,28 @@ def test_redoing_a_lens_calibration_makes_stereo_stale(tmp_path):
     write_intrinsics(tmp_path, "F", fx=1003.0)
     s = c5(tmp_path)
     assert s.state == status.STALE and "lens" in s.detail
+
+
+def test_explicitly_accepted_failed_stereo_is_usable_but_still_checked(tmp_path):
+    iL, iF = write_intrinsics(tmp_path, "L"), write_intrinsics(tmp_path, "F")
+    write_stereo(tmp_path, iL, iF, solved="2000-01-01T00:00:00")
+    path = tmp_path / "stereo.json"
+    result = json.loads(path.read_text())
+    result.update(passed=False, T_L_F={"R": np.eye(3).tolist(), "t_mm": [450, 0, 250]})
+    path.write_text(json.dumps(result))
+    assert c5(tmp_path).state == status.FAILED
+    with pytest.raises(RuntimeError, match="did not pass"):
+        stereo.load_stereo(iL, iF, path)
+    result["accepted_failed_gates"] = True
+    stereo.install(result, path)
+    assert list((tmp_path / "history").glob("stereo.*.json"))
+    assert c5(tmp_path).state == status.CHECK and c5(tmp_path).usable
+    np.testing.assert_array_equal(stereo.load_stereo(iL, iF, path)[:3, 3], [450, 0, 250])
+    bad = Intrinsics("L", iL.image_size, iL.K * 2, iL.dist)
+    with pytest.raises(RuntimeError, match="different intrinsics"):
+        stereo.load_stereo(bad, iF, path)
+    status.log_event("moved", "test", tmp_path / "events.jsonl")
+    assert c5(tmp_path).state == status.STALE
 
 
 def test_health_alarm_asks_for_a_check(tmp_path):

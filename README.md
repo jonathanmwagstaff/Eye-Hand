@@ -21,7 +21,7 @@ with a measured acceptance check at every step.
 
 - ASUS Vivobook 15 X1503ZA: Samsung OLED panel, 1920×1080, 344 × 194 mm
 - **Camera L:** built-in webcam, 1280×720 @ 30 fps
-- **Camera F:** Feeltek FHD Pro 1080p on a tripod to the user's right, 1280×960 @ 30 fps
+- **Camera F:** Feeltek FHD Pro 1080p on a tripod to the user's left, 1280×960 @ 30 fps
 
 ## The app
 
@@ -47,7 +47,7 @@ uv run eyehand intrinsics capture F --square-mm 24.0      # C2, printed board
 uv run eyehand intrinsics solve calib/raw/intrinsics_L/<timestamp>   # re-solve a capture
 uv run eyehand intrinsics compare a.json b.json           # do two calibrations agree?
 uv run eyehand status       # which calibrations are valid, stale or missing, and what's next
-uv run eyehand app          # GUI; choose Cursor only or Cursor with videos (localhost:8765)
+uv run eyehand app          # GUI; choose Cursor only or Cursor + hand/eye videos (localhost:8765)
 uv run eyehand browser-cursor  # development cursor at http://127.0.0.1:8765
 ```
 
@@ -60,17 +60,78 @@ face-monitor baseline. Laptop camera movement relative to the screen
 also requires C4 recalibration.
 Starting a recalibration stops the browser cursor server.
 
-Choose **Cursor with videos** to share GUI tracking while keeping previews and calibration
+Choose **Cursor + hand/eye videos** to share GUI tracking while keeping previews and calibration
 checks active, or **Cursor only** for the direct pipeline with previews and checks paused.
 Both buttons open the browser. **Stop cursor** returns from cursor-only mode to the GUI;
-stop first to switch back to videos. Both modes share the same eye/hand settings and calibration.
-Smoothing and hysteresis are not applied in either mode.
+either mode button switches after the previous pipeline releases its cameras. Both modes share the same eye/hand settings and calibration.
+Neither mode smooths or interpolates movement. Each cursor updates immediately on a valid
+position and holds its last valid position for up to three seconds during tracking loss,
+then hides. Missing/invalid updates do not extend that timeout; each hand expires independently.
+
+The cursor page has in-page **Move shapes**, **Data entry**, and **3D Viewer** demo tabs. Move shapes
+contains a circle, triangle, a photo icon with an Upload photos drop zone,
+a Two of Spades with an Ace of Spades target,
+and a junk files folder with a Recycle Bin target. Hold the mouse button or pinch
+and hold with the primary claw to drag; release to drop. Shapes stay inside the play
+area. Tracking loss pauses a grabbed shape without releasing it; movement resumes with
+valid tracking. The dotted shape outlines only change color: they never snap, lock, move,
+or release shapes. Focused shapes also move with arrow keys.
+
+**Data entry** has a Patient Name field. Select it with the mouse or claw, then say
+**Write this** for dictation or **Spell this** for individual letters (including space,
+hyphen, apostrophe, period, and digits). **Type this** also starts dictation. An ascending
+two-note chime marks entry; three seconds of silence or **Done writing** ends entry with
+a descending chime. **Delete last character** corrects the last character, and **Clear
+name** resets the field. Text appears live; transcription only runs while the name field
+is selected. Microphone permission is requested on page load; browser settings control
+whether it is remembered. Use **Enable microphone** to retry or unlock browser audio.
+Browser speech recognition may use an online service; use fictional names for this demo.
+
+**3D Viewer** displays the supplied toroidal propeller by Akshay Venugopal. Hold and
+drag anywhere in the viewer with the mouse to rotate; scroll to zoom. With the primary
+claw, pinch anywhere in the viewer (including empty space), then move the tracked hand
+left/right or up/down to rotate with the cursor using a virtual trackball. Move toward
+the screen to zoom out, away to zoom in.
+Release to hold the orientation. Each new pinch starts from the current view. Tracking
+loss pauses motion. **Reset view** restores the initial orientation and zoom. Arrow keys
+rotate a focused viewer; +/− zoom. The mesh is centered at the rotation origin and all
+viewer assets are served locally. The user-provided archive includes no mesh license;
+source attribution is retained in `src/eyehand/viewer/ATTRIBUTION.txt`.
 
 In the cursor page, expand **Cursor controls** to choose the aiming eye (L/R) and dominant
 clicker hand (L/R). Both hands use that eye: red is the primary cursor, blue is the independent
-secondary cursor. Each hand needs its thumb and index tips visible to both cameras. Choices
-last for the current app/server session. Clicking is not implemented; the secondary hand is intended
-for secondary/right-click actions later.
+secondary cursor. Cursors are mirrored left/right crab claws without labels. Each hand
+needs its thumb and index tips visible to both cameras.
+The **Thumb / index ratio** slider controls the aiming point: 0% aims through the index tip, 50% through the
+3D midpoint, and 100% through the thumb tip. The default is 75% toward the thumb, matching
+the previous behavior; the ratio applies to both cursors in either mode. Changes apply while
+dragging the slider. Settings last for the current app/server session.
+The **Applied** value confirms the ratio saved by the server. Cursor tabs share one tracking
+connection so multiple open tabs cannot block settings requests.
+
+Close thumb and index to press and hold; open them clearly to release. This sends separate
+mouse-down and mouse-up actions; ordinary clicks activate on release, and shape drags
+remain held between those actions. The claw closes
+and turns green during a pinch. The dominant hand sends a normal click and the other hand
+sends a secondary (`contextmenu`) event to the element under its claw, inside the cursor
+page only. This does not control other pages or the desktop, or open the browser's native
+right-click menu. Either camera can detect the pinch or release independently, even if the
+other camera disagrees or cannot see that hand. Each camera must see an opening before
+it can trigger another press, preventing disagreement from producing repeated clicks;
+the pinch stays latched through partial opening and missing observations until a clearly
+open gap is observed. **Release sensitivity** adjusts how far the fingers must open:
+0% requires a wide opening (0.85 palm widths), 100% releases with a small opening (0.35),
+and the default 50% releases at 0.60. The closing threshold stays at 0.30. Changes apply
+while dragging and are shared by both modes.
+Losing page focus cancels a drag. A fresh pinch can click a held position until its three-second
+timeout, but stale gesture data cannot click. The page must be focused.
+
+**Space** is a backup click: it prioritizes the currently tracked dominant hand. If only
+the other hand is tracked, Space sends a secondary click instead. Holding Space keeps
+that claw closed and green without repeated presses; releasing Space releases the button
+unless the physical pinch is still held.
+Claws held at old positions do not count as currently tracked hands. Space retains its
+normal behavior while a form control or menu summary is focused.
 
 ## Status
 

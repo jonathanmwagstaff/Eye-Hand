@@ -524,12 +524,12 @@ def install(result: dict, path=None) -> None:
 
 
 def load_stereo(intr_L: Intrinsics, intr_F: Intrinsics, path=None) -> np.ndarray:
-    """T_L_F (4x4). Refuses a result made with different intrinsics or one that failed."""
+    """T_L_F (4x4). Failed gates require explicit acceptance; intrinsics must match."""
     r = json.loads((path or STEREO_PATH).read_text())
     want = {"L": intrinsics_fingerprint(intr_L), "F": intrinsics_fingerprint(intr_F)}
     if r["intrinsics"] != want:
         raise RuntimeError("stereo.json was made with different intrinsics; redo C5")
-    if not r["passed"]:
+    if not r["passed"] and not r.get("accepted_failed_gates"):
         raise RuntimeError("stereo.json did not pass its gates")
     T = np.eye(4)
     T[:3, :3] = np.asarray(r["T_L_F"]["R"])

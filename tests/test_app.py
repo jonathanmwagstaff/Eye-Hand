@@ -6,6 +6,27 @@ import numpy as np
 from eyehand.app import App
 
 
+def test_video_panels_match_tripod_on_users_left(monkeypatch):
+    from eyehand import app as module
+    from eyehand.config import load_camera_configs
+
+    widgets = Mock()
+    monkeypatch.setattr(module, "ttk", widgets)
+    monkeypatch.setattr(module, "tk", Mock())
+    app = SimpleNamespace(configs=load_camera_configs(), _show_buttons=Mock())
+    for method in ("start_cursor", "start_direct_cursor", "stop_cursor", "start_recalibration",
+                   "start_emergency_recalibration", "mark_moved", "undo_view", "finish_capture",
+                   "cancel", "back_to_place", "_set_tracking", "use_failed_calibration"):
+        setattr(app, method, Mock())
+    App._build_ui(app)
+    assert list(app.video) == ["F", "L"]
+    assert list(app.caption) == ["F", "L"]
+    labels = [call.kwargs["text"] for call in widgets.LabelFrame.call_args_list]
+    assert labels[0].startswith("Camera F:") and "user's left" in labels[0]
+    assert labels[1].startswith("Camera L:")
+    assert [call.kwargs["column"] for call in widgets.LabelFrame.return_value.grid.call_args_list] == [0, 1]
+
+
 def test_monitor_warning_caps_sounds_but_keeps_refreshing(monkeypatch):
     play = Mock()
     monkeypatch.setattr("eyehand.app.sound.play", play)
@@ -64,7 +85,7 @@ def test_gui_cursor_publishes_both_hands_and_rejects_stale_frames(monkeypatch):
     from eyehand import browser_cursor
 
     samples = browser_cursor.Samples()
-    samples.set_settings({"eye": "L", "primary_hand": "L"})
+    samples.set_settings({"eye": "L", "primary_hand": "L", "thumb_weight": 0.25})
     geometry = ({"L": "intr L", "F": "intr F"}, "pose", "screen", "size")
     worker = SimpleNamespace(profile="measurement", error=None)
     app = SimpleNamespace(cursor_server=Mock(), mode="place", c5_usable=True, track_var=Mock(),
@@ -76,7 +97,7 @@ def test_gui_cursor_publishes_both_hands_and_rejects_stale_frames(monkeypatch):
     solve = Mock(return_value={"L": {"valid": True}, "R": {"valid": False}})
     monkeypatch.setattr("eyehand.app.browser_cursor._pointer_samples", solve)
     App._publish_cursor(app, snaps)
-    solve.assert_called_once_with(a, b, "L", *geometry)
+    solve.assert_called_once_with(a, b, "L", *geometry, thumb_weight=0.25)
     assert samples.after(0)[1]["primary_hand"] == "L"
     a.t_ms -= 1000
     b.t_ms -= 1000
@@ -129,6 +150,33 @@ def test_failed_emergency_solve_does_not_install(monkeypatch):
     App.show_result(app)
     install.assert_not_called()
     assert app.mode == "result"
+    assert app.failed_result == {"passed": False, "gates": []}
+
+
+def test_failed_result_can_be_explicitly_applied(monkeypatch):
+    install = Mock()
+    monkeypatch.setattr("eyehand.app.stereo.install", install)
+    monkeypatch.setattr("eyehand.app.status.log_event", Mock())
+    result = {"passed": False, "gates": [{"name": "accuracy", "pass": False}], "raw_dir": "test"}
+    app = SimpleNamespace(mode="result", failed_result=result, _save_room_refs=Mock(),
+                          back_to_place=Mock(), header=Mock())
+    App.use_failed_calibration(app)
+    install.assert_called_once_with({**result, "accepted_failed_gates": True})
+    assert not result["passed"] and "accepted_failed_gates" not in result
+    assert app.failed_result is None
+    app.back_to_place.assert_called_once()
+    App.use_failed_calibration(app)
+    assert install.call_count == 1
+
+
+def test_solve_error_offers_no_failed_result(monkeypatch):
+    install = Mock()
+    monkeypatch.setattr("eyehand.app.stereo.install", install)
+    app = SimpleNamespace(solve_result={"error": "no solution"}, failed_result={"old": True},
+                          header=Mock(), _show_buttons=Mock())
+    App.show_result(app)
+    assert app.failed_result is None
+    install.assert_not_called()
 
 
 def test_emergency_capture_finishes_at_three_without_coverage_wait():
@@ -180,7 +228,7 @@ def test_cursor_only_releases_preview_and_reuses_controls(monkeypatch):
     worker.join.assert_called_once()
     assert app.mode == "cursor"
     runtime.assert_called_once_with(stop_event=app.cursor_stop, open_browser=True, samples=samples)
-    assert samples.settings() == {"eye": "L", "primary_hand": "L"}
+    assert samples.settings() == {"eye": "L", "primary_hand": "L", "thumb_weight": 0.75, "release_sensitivity": 0.5}
 
 
 def test_cursor_only_tick_skips_preview_and_health_checks():
@@ -212,7 +260,7 @@ def test_stop_cursor_only_waits_before_restoring_preview(monkeypatch):
 def test_cursor_only_failure_returns_to_preview():
     thread = Mock()
     thread.is_alive.return_value = False
-    app = SimpleNamespace(mode="cursor", cursor_thread=thread, cursor_error="port busy",
+    app = SimpleNamespace(mode="cursor", cursor_thread=thread, cursor_error="port busy", cursor_resume_videos=False,
                           stop_cursor=Mock(), header=Mock())
     App._tick(app)
     app.stop_cursor.assert_called_once()
@@ -231,3 +279,46 @@ def test_close_cursor_only_does_not_restart_preview():
     worker.stop.assert_called_once()
     worker.start.assert_not_called()
     app.destroy.assert_called_once()
+
+
+def test_switch_to_videos_waits_for_direct_camera_release():
+    import threading
+
+    thread = Mock()
+    thread.is_alive.return_value = True
+    app = SimpleNamespace(mode="cursor", cursor_thread=thread, cursor_stop=threading.Event(),
+                          cursor_resume_videos=False, cursor_error=None, header=Mock(),
+                          _show_buttons=Mock(), stop_cursor=Mock(), start_cursor=Mock())
+    App.start_cursor(app)
+    assert app.cursor_stop.is_set()
+    assert app.cursor_resume_videos
+    App._tick(app)
+    app.stop_cursor.assert_not_called()
+    app.start_cursor.assert_not_called()
+    thread.is_alive.return_value = False
+    App._tick(app)
+    app.stop_cursor.assert_called_once()
+    app.start_cursor.assert_called_once()
+
+
+def test_both_mode_buttons_remain_visible_with_active_mode_disabled():
+    buttons = {name: Mock() for name in ("btn_recal", "btn_moved", "btn_undo", "btn_finish",
+               "btn_cancel", "btn_retry", "btn_done", "chk_track", "btn_cursor",
+               "btn_direct_cursor", "btn_stop_cursor", "btn_emergency", "btn_use_failed")}
+    app = SimpleNamespace(**buttons, mode="place", cursor_server=Mock(),
+                          cursor_resume_videos=False, progress=Mock(), failed_result=None)
+    App._show_buttons(app)
+    app.btn_cursor.pack.assert_called_once()
+    app.btn_direct_cursor.pack.assert_called_once()
+    app.btn_cursor.state.assert_called_with(["disabled"])
+    app.btn_direct_cursor.state.assert_called_with(["!disabled"])
+    app.mode, app.cursor_server = "cursor", None
+    App._show_buttons(app)
+    app.btn_cursor.state.assert_called_with(["!disabled"])
+    app.btn_direct_cursor.state.assert_called_with(["disabled"])
+    app.mode = "result"
+    App._show_buttons(app)
+    app.btn_use_failed.pack.assert_not_called()
+    app.failed_result = {"passed": False}
+    App._show_buttons(app)
+    app.btn_use_failed.pack.assert_called_once()
