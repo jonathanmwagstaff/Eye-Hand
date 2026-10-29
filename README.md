@@ -4,8 +4,10 @@ A cursor you aim like sighting along your finger. Two webcams find the 3D positi
 **dominant (right) eye** and your **index fingertip**. The cursor goes where the line from the
 eye through the fingertip meets the laptop screen.
 
-The goal is **absolute accuracy from cheap hardware**: careful spatial and temporal calibration,
+The goal is **improved accuracy from cheap hardware**: careful spatial and temporal calibration,
 with a measured acceptance check at every step.
+
+This way you aren't waving around trying to find your cursor. The cursor appears behind your fingers where you expect it.
 
 ## Documents
 
